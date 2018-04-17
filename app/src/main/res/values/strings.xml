@@ -1,3 +1,7 @@
 <resources>
     <string name="app_name">EESystem_C</string>
+    <string name="waitcard_message">カードをかざしてください</string>
+    <string name="button">Button</string>
+    <string name="enter_message">入室</string>
+    <string name="exit_message">退出</string>
 </resources>
