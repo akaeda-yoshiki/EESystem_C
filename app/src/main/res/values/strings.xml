@@ -4,4 +4,5 @@
     <string name="button">Button</string>
     <string name="enter_message">入室</string>
     <string name="exit_message">退出</string>
+    <string name="stats">待機</string>
 </resources>
