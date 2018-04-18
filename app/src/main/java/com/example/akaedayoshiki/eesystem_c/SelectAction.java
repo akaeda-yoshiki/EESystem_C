@@ -31,7 +31,7 @@ public class SelectAction extends AppCompatActivity {
     }
 
     public void onClick(View view) {
-        TextView textview1 = (TextView) this.findViewById(R.id.text);
+        TextView textview1 = (TextView) this.findViewById(R.id.stats1);
         switch (view.getId()) {
             case R.id.enter:
                 textview1.setText("入室");
