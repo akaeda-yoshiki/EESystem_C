@@ -16,7 +16,7 @@ public class WaitCard extends AppCompatActivity {
     }
 
     public void onClick(View view){
-//        Intent intent = new Intent(this, SelectAction.class);
-//        startActivity(intent);
+        Intent intent = new Intent(this, SelectAction.class);
+        startActivity(intent);
     }
 }
