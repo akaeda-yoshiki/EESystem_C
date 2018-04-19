@@ -3,7 +3,7 @@
     <string name="waitcard_message">カードをかざしてください</string>
     <string name="button">Button</string>
     <string name="enter_message">入室</string>
-    <string name="exit_message">退出</string>
+    <string name="exit_message">退室</string>
     <string name="stats">待機</string>
     <string name="nameT_S">氏名</string>
     <string name="gradeT_S">学年</string>

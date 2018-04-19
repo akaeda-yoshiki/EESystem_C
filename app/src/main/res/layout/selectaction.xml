@@ -32,7 +32,7 @@
         app:layout_constraintVertical_bias="0.585" />
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/info_layout"
         android:layout_width="349dp"
         android:layout_height="68dp"
         android:baselineAligned="false"
