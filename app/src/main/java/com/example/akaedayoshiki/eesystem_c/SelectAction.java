@@ -17,9 +17,9 @@ public class SelectAction extends AppCompatActivity {
 
     //    private Button enter;
 //    private Button exit;
-    Handler handle;
+    Handler handle;//一定時間後に処理するための変数
     private SoundPool soundPool;
-    private int selectaction_wav;
+    private int selectaction_wav;//入退室を選択時の効果音
     private Calendar calendar;
 
     @Override
@@ -30,32 +30,35 @@ public class SelectAction extends AppCompatActivity {
         findViewById(R.id.enter);
         findViewById(R.id.exit);
         handle = new Handler();
+
+        //音関係
         soundPool       = new SoundPool( 1, AudioManager.STREAM_MUSIC, 0 );
         selectaction_wav = soundPool.load(this, R.raw.selectaction, 1 );
-
-//        findViewById(R.id.info_layout).setVisibility(View.INVISIBLE);
     }
 
+    //ボタンタップ時
     public void onClick(View view) {
         TextView textview =  this.findViewById(R.id.stats1);
         switch (view.getId()) {
-            case R.id.enter:
+            case R.id.enter://「入室」をタップ
                 textview.setText(R.string.enter_message);
                 action();
                 break;
-            case R.id.exit:
+            case R.id.exit://「退室」をタップ
                 textview.setText(R.string.exit_message);
                 action();
                 break;
         }
     }
 
+    //入退室選択時の処理
     private void action(){
-        handle.postDelayed(new backwaitcard(), 2000);
-        soundPool.play(selectaction_wav, 1F, 1F, 0, 0, 1F);
-        findViewById(R.id.enter).setVisibility(View.INVISIBLE);
-        findViewById(R.id.exit).setVisibility(View.INVISIBLE);
+        handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
+        soundPool.play(selectaction_wav, 1F, 1F, 0, 0, 1F);//効果音再生
+        findViewById(R.id.enter).setVisibility(View.INVISIBLE);//ボタン非表示
+        findViewById(R.id.exit).setVisibility(View.INVISIBLE);//ボタン非表示
 
+        //時刻取得、
         calendar = Calendar.getInstance();
 //        int year = calendar.get(Calendar.YEAR);
 //        int month = calendar.get(Calendar.MONTH);
@@ -73,7 +76,7 @@ public class SelectAction extends AppCompatActivity {
 //            TextView textview1 = (TextView) findViewById(R.id.text);
 //            textview1.setText("待機");
             Intent intent = new Intent(SelectAction.this, WaitCard.class);
-            startActivity(intent);
+            startActivity(intent);//カード読み取り画面に切り替え
         }
     }
 }
