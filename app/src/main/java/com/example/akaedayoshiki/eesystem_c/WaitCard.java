@@ -94,6 +94,9 @@ public class WaitCard extends AppCompatActivity {
         byte[] rawId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
         String id = bytesToString(rawId);
         Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
+
+//        Intent go_intent = new Intent(this, SelectAction.class);//入退室選択画面に切り替え
+//        startActivity(go_intent);
     }
 
 
