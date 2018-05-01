@@ -25,6 +25,7 @@ public class WaitCard extends AppCompatActivity {
             new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
     };
 
+
     //反応するタグの種類を指定。
     private String[][] techList = new String[][]{
             {
@@ -72,8 +73,13 @@ public class WaitCard extends AppCompatActivity {
     //ボタンがタップされた時の処理
     public void onClick(View view) {
         soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
-        Intent intent = new Intent(this, SelectAction.class);//入退室選択画面に切り替え
-        startActivity(intent);
+//        Intent intent = new Intent(this, SelectAction.class);//入退室選択画面に切り替え
+//        startActivity(intent);
+//        String POST_URL="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/server/readcard.php";
+//        MyAsyncTask task = new MyAsyncTask();
+//        task.execute(POST_URL);
+        Connect connect = new Connect();
+        connect.startVolley();
     }
 
     //NFCをタッチした後の処理
@@ -94,6 +100,11 @@ public class WaitCard extends AppCompatActivity {
         byte[] rawId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
         String id = bytesToString(rawId);
         Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
+
+//        String POST_URL="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/server/readcard.php";
+//        MyAsyncTask task = new MyAsyncTask();
+//        task.execute(POST_URL);
+
 
 //        Intent go_intent = new Intent(this, SelectAction.class);//入退室選択画面に切り替え
 //        startActivity(go_intent);
