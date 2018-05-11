@@ -13,13 +13,15 @@ import java.util.Map;
 
 
 public class Connect extends AppCompatActivity {
+    RequestQueue postQueue;
+
     public void startVolley() {
 
         //queue
-        RequestQueue postQueue = Volley.newRequestQueue(this);
+         postQueue = Volley.newRequestQueue(this);
 
         //サーバーのアドレス任意
-        String POST_URL="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/server/readcard.php";
+        String POST_URL="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/server/insert.php";
 
         StringRequest stringReq=new StringRequest(Request.Method.POST,POST_URL,
 
@@ -45,8 +47,9 @@ public class Connect extends AppCompatActivity {
 
                 //今回は[FastText：名前]と[SecondText：内容]を設定
                 Map<String,String> params = new HashMap<String,String>();
-                params.put("FastText","1111");
-                params.put("SecondText","stats");
+                params.put("id","1111");
+                params.put("name","stats");
+                params.put("grade","aa");
                 return params;
             }
         };
