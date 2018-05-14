@@ -33,7 +33,13 @@ public class SelectAction extends AppCompatActivity {
 
         //音関係
         soundPool       = new SoundPool( 1, AudioManager.STREAM_MUSIC, 0 );
-        selectaction_wav = soundPool.load(this, R.raw.selectaction, 1 );
+
+        TextView name1_textview =  this.findViewById(R.id.name1);
+        TextView grade1_textview1 =  this.findViewById(R.id.grade1);
+
+        Intent intent = getIntent();
+        name1_textview.setText(intent.getStringExtra("NAME"));
+        grade1_textview1.setText(intent.getStringExtra("GRADE"));
     }
 
     //ボタンタップ時
