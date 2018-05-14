@@ -82,7 +82,7 @@ public class WaitCard extends AppCompatActivity {
     public void onClick(View view) {
         soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
 
-        send_id();
+        send_id("0");
 
     }
     public void goto_selectaction(){
@@ -113,7 +113,7 @@ public class WaitCard extends AppCompatActivity {
         byte[] rawId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
         String id = bytesToString(rawId);
 //        Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
-        send_id();
+        send_id(id);
     }
 
 
@@ -134,20 +134,20 @@ public class WaitCard extends AppCompatActivity {
         return buffer.toString();
     }
 
-    public void send_id(){
+    public void send_id(String id){
         RequestQueue postQueue;
         postQueue = Volley.newRequestQueue(this);
         //サーバーのアドレス
         String url="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/EESystem_S/get_id.php";
+//        url+="?id="+id;
         url+="?id=5";
-
         StringRequest stringReq=new StringRequest(Request.Method.GET ,url,
 
                 //通信成功
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(WaitCard.this,"通信に成功しました。",Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(WaitCard.this,"通信に成功しました。",Toast.LENGTH_SHORT).show();
                         TextView Textview =  findViewById(R.id.textView);
 
                         response = response.substring(2, response.length() - 2);
