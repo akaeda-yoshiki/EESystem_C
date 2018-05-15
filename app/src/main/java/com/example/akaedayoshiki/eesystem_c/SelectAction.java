@@ -20,7 +20,6 @@ public class SelectAction extends AppCompatActivity {
     Handler handle;//一定時間後に処理するための変数
     private SoundPool soundPool;
     private int selectaction_wav;//入退室を選択時の効果音
-    private Calendar calendar;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,11 +34,20 @@ public class SelectAction extends AppCompatActivity {
         soundPool       = new SoundPool( 1, AudioManager.STREAM_MUSIC, 0 );
 
         TextView name1_textview =  this.findViewById(R.id.name1);
-        TextView grade1_textview1 =  this.findViewById(R.id.grade1);
+        TextView grade1_textview =  this.findViewById(R.id.grade1);
+        TextView time1_textview =  this.findViewById(R.id.time1);
+        TextView stats1_textview =  this.findViewById(R.id.stats1);
 
         Intent intent = getIntent();
         name1_textview.setText(intent.getStringExtra("NAME"));
-        grade1_textview1.setText(intent.getStringExtra("GRADE"));
+        grade1_textview.setText(intent.getStringExtra("GRADE"));
+        time1_textview.setText(intent.getStringExtra("TIME"));
+        String st = intent.getStringExtra("STATS");
+        if(st == "1")
+            stats1_textview.setText("入室");
+        else
+            stats1_textview.setText("退室");
+
     }
 
     //ボタンタップ時
@@ -64,15 +72,7 @@ public class SelectAction extends AppCompatActivity {
         findViewById(R.id.enter).setVisibility(View.INVISIBLE);//ボタン非表示
         findViewById(R.id.exit).setVisibility(View.INVISIBLE);//ボタン非表示
 
-        //時刻取得、
-        calendar = Calendar.getInstance();
-//        int year = calendar.get(Calendar.YEAR);
-//        int month = calendar.get(Calendar.MONTH);
-//        int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int hour = calendar.get(Calendar.HOUR_OF_DAY);
-        int minute = calendar.get(Calendar.MINUTE);
-        TextView textview =  this.findViewById(R.id.time1);
-        textview.setText(hour + "時" + minute + "分");
+
 
     }
 

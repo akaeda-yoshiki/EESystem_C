@@ -18,6 +18,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -32,7 +34,7 @@ public class WaitCard extends AppCompatActivity {
     private IntentFilter[] intentFilter = new IntentFilter[]{
             new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
     };
-    private String send_name = "", send_grade = "";
+    private String send_name = "", send_grade = "", send_time = "", send_stats = "";
 
     //反応するタグの種類を指定。
     private String[][] techList = new String[][]{
@@ -90,6 +92,10 @@ public class WaitCard extends AppCompatActivity {
             Intent intent = new Intent(this, SelectAction.class);//入退室選択画面に切り替え
             intent.putExtra("NAME", send_name);
             intent.putExtra("GRADE", send_grade);
+            String[] str = send_time.split("_");
+            intent.putExtra("TIME", str[3]);
+            intent.putExtra("STATS", send_stats);
+
             startActivity(intent);
         }
     }
@@ -135,12 +141,14 @@ public class WaitCard extends AppCompatActivity {
     }
 
     public void send_id(String id){
+        gupdata_time();
+
         RequestQueue postQueue;
         postQueue = Volley.newRequestQueue(this);
         //サーバーのアドレス
-        String url="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/EESystem_S/get_id.php";
+        String url="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/EESystem_S/insert.php";
 //        url+="?id="+id;
-        url+="?id=5";
+        url+="?id=5&time="+send_time;
         StringRequest stringReq=new StringRequest(Request.Method.GET ,url,
 
                 //通信成功
@@ -148,14 +156,18 @@ public class WaitCard extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 //                        Toast.makeText(WaitCard.this,"通信に成功しました。",Toast.LENGTH_SHORT).show();
-                        TextView Textview =  findViewById(R.id.textView);
 
                         response = response.substring(2, response.length() - 2);
                         String[] data = response.split(",");
                         send_name = data[1].substring(8, data[1].length() - 1);
                         send_grade = data[2].substring(9, data[2].length() - 1);
+//                        send_stats = data[3].substring(9, data[3].length() - 1);
+//                        String[] str = send_time.split(" ");
+//                        TextView Textview =  findViewById(R.id.textView);
+//                        Textview.setText(str[0]);
 
                         goto_selectaction();
+
 
 
                     }
@@ -175,13 +187,28 @@ public class WaitCard extends AppCompatActivity {
 
                 //今回は[FastText：名前]と[SecondText：内容]を設定
                 Map<String,String> params = new HashMap<>();
-                params.put("id","1111");
-                params.put("name","stats");
-                params.put("grade","aa");
+//                params.put("id","1111");
+//                params.put("name","stats");
+//                params.put("grade","aa");
                 return params;
             }
         };
         postQueue.add(stringReq);
+    }
+
+    public  void gupdata_time(){
+        Calendar calendar;
+
+        //時刻取得、
+        calendar = Calendar.getInstance();
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH);
+        int day = calendar.get(Calendar.DAY_OF_MONTH);
+        int hour = calendar.get(Calendar.HOUR_OF_DAY);
+        int minute = calendar.get(Calendar.MINUTE);
+        String str =year + "_" + month + "_" + day + "_" + hour + ":" + minute;
+        send_time = str;
+//        return str;
     }
 }
 
