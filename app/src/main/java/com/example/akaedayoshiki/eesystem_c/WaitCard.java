@@ -10,6 +10,7 @@ import android.nfc.*;
 import android.app.PendingIntent;
 import android.content.IntentFilter;
 import android.text.TextUtils;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.android.volley.Request;
@@ -26,6 +27,7 @@ import java.util.Map;
 
 public class WaitCard extends AppCompatActivity {
 
+    private int buttun_flag = 0;//1:ID確認が押されている  0:戻るが押されている
     private SoundPool soundPool;
     private int cardread_wav;//読み取り時の効果音
     private NfcAdapter mNfcAdapter;
@@ -84,8 +86,31 @@ public class WaitCard extends AppCompatActivity {
     public void onClick(View view) {
         soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
 
-        send_id("0");
+//        send_id("0");
+        TextView textView =  this.findViewById(R.id.textView);
+        textView.setText("IDを確認します。\nカードをかざしてください。");
 
+        Button button = this.findViewById(R.id.button);
+        button.setVisibility(View.INVISIBLE);
+
+        Button back = this.findViewById(R.id.back);
+        back.setVisibility(View.VISIBLE);
+        buttun_flag = 1;
+    }
+
+    public void onbackClick(View view) {
+        soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
+
+//        send_id("0");
+        TextView textView =  this.findViewById(R.id.textView);
+        textView.setText("カードをかざしてください");
+
+        Button button = this.findViewById(R.id.button);
+        button.setVisibility(View.VISIBLE);
+
+        Button back = this.findViewById(R.id.back);
+        back.setVisibility(View.INVISIBLE);
+        buttun_flag = 0;
     }
     public void goto_selectaction(){
         if(send_grade != "" && send_name != "") {
@@ -119,7 +144,14 @@ public class WaitCard extends AppCompatActivity {
         byte[] rawId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
         String id = bytesToString(rawId);
 //        Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
-        send_id(id);
+
+        if(buttun_flag == 0)
+          send_id(id);
+        else if(buttun_flag == 1){
+            TextView textView = this.findViewById(R.id.textView);
+            textView.setText("あなたのIDは\n"+id+"\nです。");
+        }
+
     }
 
 
@@ -147,8 +179,8 @@ public class WaitCard extends AppCompatActivity {
         postQueue = Volley.newRequestQueue(this);
         //サーバーのアドレス
         String url="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/EESystem_S/insert.php";
-//        url+="?id="+id;
-        url+="?id=5&time="+send_time;
+        url+="?id="+id+"&time="+send_time;
+//        url+="?id=5&time="+send_time;
         StringRequest stringReq=new StringRequest(Request.Method.GET ,url,
 
                 //通信成功
@@ -159,14 +191,23 @@ public class WaitCard extends AppCompatActivity {
 
                         response = response.substring(2, response.length() - 2);
                         String[] data = response.split(",");
-                        send_name = data[1].substring(8, data[1].length() - 1);
-                        send_grade = data[2].substring(9, data[2].length() - 1);
-//                        send_stats = data[3].substring(9, data[3].length() - 1);
+                        String check = data[0].substring(1, 6);
+                        if(check.equals("stats")){
+                            TextView Textview =  findViewById(R.id.textView);
+                            Textview.setText("このIDは登録されていません");
+                        }
+                        else {
+                            send_name = data[1].substring(8, data[1].length() - 1);
+                            send_grade = data[2].substring(9, data[2].length() - 1);
+                            send_stats = data[3].substring(9, data[3].length() - 1);
+                            goto_selectaction();
+                        }
+
 //                        String[] str = send_time.split(" ");
 //                        TextView Textview =  findViewById(R.id.textView);
-//                        Textview.setText(str[0]);
+//                        Textview.setText(check);
 
-                        goto_selectaction();
+
 
 
 
@@ -189,6 +230,8 @@ public class WaitCard extends AppCompatActivity {
                 Map<String,String> params = new HashMap<>();
 //                params.put("id","1111");
 //                params.put("name","stats");
+
+
 //                params.put("grade","aa");
                 return params;
             }

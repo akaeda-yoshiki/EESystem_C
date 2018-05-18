@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">EESystem_C</string>
     <string name="waitcard_message">カードをかざしてください</string>
-    <string name="button">Button</string>
+    <string name="button">IDの確認</string>
     <string name="enter_message">入室</string>
     <string name="exit_message">退室</string>
     <string name="stats">待機</string>
@@ -9,8 +9,10 @@
     <string name="gradeT_S">学年</string>
     <string name="timeT_S">時刻</string>
     <string name="statsT_S">状態</string>
-    <string name="name1_S">赤枝佳樹</string>
-    <string name="grade1_S">4年</string>
-    <string name="time1_S">000</string>
-    <string name="stats1_S">退出</string>
+    <string name="name1_S"></string>
+    <string name="grade1_S"></string>
+    <string name="time1_S"></string>
+    <string name="stats1_S"></string>
+    <string name="draw_id"></string>
+    <string name="back">戻る</string>
 </resources>

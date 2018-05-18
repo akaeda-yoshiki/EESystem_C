@@ -5,43 +5,18 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/enter"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:onClick="onClick"
-        android:text="@string/enter_message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/exit"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.585" />
-
-    <Button
-        android:id="@+id/exit"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:onClick="onClick"
-        android:text="@string/exit_message"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/enter"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.585" />
-
     <LinearLayout
         android:id="@+id/info_layout"
         android:layout_width="349dp"
         android:layout_height="68dp"
         android:baselineAligned="false"
         android:orientation="horizontal"
-        app:layout_constraintBottom_toTopOf="@+id/enter"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintHorizontal_bias="0.514"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.424">
 
         <LinearLayout
             android:layout_width="18dp"
@@ -53,6 +28,7 @@
                 android:id="@+id/nameT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#2f99e0"
                 android:text="@string/nameT_S"
                 android:textSize="18sp" />
 
@@ -74,6 +50,7 @@
                 android:id="@+id/gradeT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#2f99e0"
                 android:text="@string/gradeT_S"
                 android:textSize="18sp" />
 
@@ -95,6 +72,7 @@
                 android:id="@+id/timeT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#2f99e0"
                 android:text="@string/timeT_S"
                 android:textSize="18sp" />
 
@@ -116,6 +94,7 @@
                 android:id="@+id/statsT"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#2f99e0"
                 android:text="@string/statsT_S"
                 android:textSize="18sp" />
 

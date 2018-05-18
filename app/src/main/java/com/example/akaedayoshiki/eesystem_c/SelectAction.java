@@ -26,9 +26,6 @@ public class SelectAction extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selectaction);
 
-        findViewById(R.id.enter);
-        findViewById(R.id.exit);
-        handle = new Handler();
 
         //音関係
         soundPool       = new SoundPool( 1, AudioManager.STREAM_MUSIC, 0 );
@@ -48,39 +45,14 @@ public class SelectAction extends AppCompatActivity {
         else
             stats1_textview.setText("退室");
 
-    }
-
-    //ボタンタップ時
-    public void onClick(View view) {
-        TextView textview =  this.findViewById(R.id.stats1);
-        switch (view.getId()) {
-            case R.id.enter://「入室」をタップ
-                textview.setText(R.string.enter_message);
-                action();
-                break;
-            case R.id.exit://「退室」をタップ
-                textview.setText(R.string.exit_message);
-                action();
-                break;
-        }
-    }
-
-    //入退室選択時の処理
-    private void action(){
+        handle = new Handler();
         handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
-        soundPool.play(selectaction_wav, 1F, 1F, 0, 0, 1F);//効果音再生
-        findViewById(R.id.enter).setVisibility(View.INVISIBLE);//ボタン非表示
-        findViewById(R.id.exit).setVisibility(View.INVISIBLE);//ボタン非表示
-
-
 
     }
 
     class backwaitcard implements Runnable {
         @Override
         public void run() {
-//            TextView textview1 = (TextView) findViewById(R.id.text);
-//            textview1.setText("待機");
             Intent intent = new Intent(SelectAction.this, WaitCard.class);
             startActivity(intent);//カード読み取り画面に切り替え
         }
