@@ -188,7 +188,6 @@ public class WaitCard extends AppCompatActivity {
                     @Override
                     public void onResponse(String response) {
 //                        Toast.makeText(WaitCard.this,"通信に成功しました。",Toast.LENGTH_SHORT).show();
-
                         response = response.substring(2, response.length() - 2);
                         String[] data = response.split(",");
                         String check = data[0].substring(1, 6);
