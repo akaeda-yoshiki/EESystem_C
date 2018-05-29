@@ -36,7 +36,7 @@ public class WaitCard extends AppCompatActivity {
     private IntentFilter[] intentFilter = new IntentFilter[]{
             new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
     };
-    private String send_name = "", send_grade = "", send_time = "", send_stats = "";
+    private String send_name = "", send_grade = "", send_time = "", send_stats = "", time1 = "", time2 = "";
 
     //反応するタグの種類を指定。
     private String[][] techList = new String[][]{
@@ -65,6 +65,14 @@ public class WaitCard extends AppCompatActivity {
         //PendingIntent→タイミング（イベント発生）を指定してIntentを発生させる
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,getClass()), 0);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
+
+        send_name = "";
+        send_grade = "";
+        send_time = "";
+        send_stats = "";
+        time1 = "";
+        time2 = "";
+
     }
 
     @Override
@@ -120,7 +128,12 @@ public class WaitCard extends AppCompatActivity {
             String[] str = send_time.split("_");
             intent.putExtra("TIME", str[3]);
             intent.putExtra("STATS", send_stats);
-
+            send_name = "";
+            send_grade = "";
+            send_time = "";
+            send_stats = "";
+            time1 = "";
+            time2 = "";
             startActivity(intent);
         }
     }
@@ -179,7 +192,7 @@ public class WaitCard extends AppCompatActivity {
         postQueue = Volley.newRequestQueue(this);
         //サーバーのアドレス
         String url="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/EESystem_S/insert.php";
-        url+="?id="+id+"&time="+send_time;
+        url+="?id="+id+"&time1="+time1+"&time2="+time2;
 //        url+="?id=5&time="+send_time;
         StringRequest stringReq=new StringRequest(Request.Method.GET ,url,
 
@@ -204,7 +217,7 @@ public class WaitCard extends AppCompatActivity {
 
 //                        String[] str = send_time.split(" ");
 //                        TextView Textview =  findViewById(R.id.textView);
-//                        Textview.setText(check);
+//                        Textview.setText(response);
 
 
 
@@ -249,6 +262,29 @@ public class WaitCard extends AppCompatActivity {
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
         String str =year + "_" + month + "_" + day + "_" + hour + ":" + minute;
+        time1 += year;
+        if(month < 10)
+            time1 += "0" + month;
+        else
+            time1 += month;
+
+        if(day < 10)
+            time1 += "0" + day;
+        else
+            time1 += day;
+
+        if(hour < 10)
+            time2 += "0" + hour;
+        else
+            time2 += hour;
+
+        time2 += ":";
+
+        if(minute < 10)
+            time2 += "0" + minute;
+        else
+            time2 += minute;
+//        time2 = hour + ":" + minute;
         send_time = str;
 //        return str;
     }

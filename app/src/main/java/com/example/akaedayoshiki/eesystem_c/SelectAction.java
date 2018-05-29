@@ -50,11 +50,20 @@ public class SelectAction extends AppCompatActivity {
 
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
+
+    }
+
     class backwaitcard implements Runnable {
         @Override
         public void run() {
+
             Intent intent = new Intent(SelectAction.this, WaitCard.class);
             startActivity(intent);//カード読み取り画面に切り替え
+
         }
     }
 }
