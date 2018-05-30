@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -29,39 +30,58 @@ public class SelectAction extends AppCompatActivity {
 
         //音関係
         soundPool       = new SoundPool( 1, AudioManager.STREAM_MUSIC, 0 );
+//        Intent intent = getIntent();
+        get_data();
+        handle = new Handler();
+        handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        get_data();
+        handle = new Handler();
+        handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        //画面表示時に再度起動された際にgetIntent()を更新する。
+        setIntent(intent);
+//        get_data(intent);
+    }
+
+    private void get_data(){
         TextView name1_textview =  this.findViewById(R.id.name1);
         TextView grade1_textview =  this.findViewById(R.id.grade1);
         TextView time1_textview =  this.findViewById(R.id.time1);
         TextView stats1_textview =  this.findViewById(R.id.stats1);
 
         Intent intent = getIntent();
+        String stats = intent.getStringExtra("ST");
         name1_textview.setText(intent.getStringExtra("NAME"));
         grade1_textview.setText(intent.getStringExtra("GRADE"));
         time1_textview.setText(intent.getStringExtra("TIME"));
-        String st = intent.getStringExtra("STATS");
-        if(st == "1")
-            stats1_textview.setText("入室");
-        else
-            stats1_textview.setText("退室");
+        stats1_textview.setText(stats);
+//        if(st.equals("0"))
+//            stats1_textview.setText("退室");
+//        else
+//            stats1_textview.setText("入室");
+//        stats1_textview.setText(intent.getStringExtra("STATS"));
+//        Toast.makeText(SelectAction.this,intent.getStringExtra("STATS1"), Toast.LENGTH_SHORT).show();
 
-        handle = new Handler();
-        handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
 
-    }
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
 
     }
+
 
     class backwaitcard implements Runnable {
         @Override
         public void run() {
 
             Intent intent = new Intent(SelectAction.this, WaitCard.class);
+            finish();
             startActivity(intent);//カード読み取り画面に切り替え
 
         }

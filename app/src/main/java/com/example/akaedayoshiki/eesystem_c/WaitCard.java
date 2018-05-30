@@ -66,18 +66,17 @@ public class WaitCard extends AppCompatActivity {
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,getClass()), 0);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
 
-        send_name = "";
-        send_grade = "";
-        send_time = "";
-        send_stats = "";
-        time1 = "";
-        time2 = "";
-
     }
 
     @Override
     protected void onResume() {
         super.onResume();
+//        send_name = "";
+//        send_grade = "";
+//        send_time = "";
+//        send_stats = "";
+//        time1 = "";
+//        time2 = "";
 
         mNfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilter, techList);
     }
@@ -122,12 +121,14 @@ public class WaitCard extends AppCompatActivity {
     }
     public void goto_selectaction(){
         if(send_grade != "" && send_name != "") {
-            Intent intent = new Intent(this, SelectAction.class);//入退室選択画面に切り替え
+            Intent intent = new Intent(WaitCard.this, SelectAction.class);//入退室選択画面に切り替え
             intent.putExtra("NAME", send_name);
             intent.putExtra("GRADE", send_grade);
-            String[] str = send_time.split("_");
-            intent.putExtra("TIME", str[3]);
-            intent.putExtra("STATS", send_stats);
+//            String[] str = send_time.split("_");
+            intent.putExtra("TIME", time2);
+            intent.putExtra("ST", send_stats);
+//            TextView Textview =  findViewById(R.id.textView);
+//            Textview.setText(send_stats);
             send_name = "";
             send_grade = "";
             send_time = "";
@@ -186,7 +187,7 @@ public class WaitCard extends AppCompatActivity {
     }
 
     public void send_id(String id){
-        gupdata_time();
+        updata_time();
 
         RequestQueue postQueue;
         postQueue = Volley.newRequestQueue(this);
@@ -212,12 +213,14 @@ public class WaitCard extends AppCompatActivity {
                             send_name = data[1].substring(8, data[1].length() - 1);
                             send_grade = data[2].substring(9, data[2].length() - 1);
                             send_stats = data[3].substring(9, data[3].length() - 1);
+//                            TextView Textview =  findViewById(R.id.textView);
+//                        Textview.setText(send_stats);
                             goto_selectaction();
                         }
 
 //                        String[] str = send_time.split(" ");
 //                        TextView Textview =  findViewById(R.id.textView);
-//                        Textview.setText(response);
+//                        Textview.setText(time1);
 
 
 
@@ -251,17 +254,17 @@ public class WaitCard extends AppCompatActivity {
         postQueue.add(stringReq);
     }
 
-    public  void gupdata_time(){
+    public  void updata_time(){
         Calendar calendar;
 
         //時刻取得、
         calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH);
+        int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        String str =year + "_" + month + "_" + day + "_" + hour + ":" + minute;
+        send_time =year + "_" + month + "_" + day + " " + hour + ":" + minute;
         time1 += year;
         if(month < 10)
             time1 += "0" + month;
@@ -284,9 +287,6 @@ public class WaitCard extends AppCompatActivity {
             time2 += "0" + minute;
         else
             time2 += minute;
-//        time2 = hour + ":" + minute;
-        send_time = str;
-//        return str;
     }
 }
 
