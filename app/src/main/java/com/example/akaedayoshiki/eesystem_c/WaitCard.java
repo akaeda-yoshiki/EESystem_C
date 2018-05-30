@@ -57,7 +57,7 @@ public class WaitCard extends AppCompatActivity {
         setContentView(R.layout.waitcard);
 
         //音関係
-        cardread_wav = soundPool.load(this, R.raw.waitcard, 1 );
+//        cardread_wav = soundPool.load(this, R.raw.waitcard, 1 );
 
         //PendingIntent→タイミング（イベント発生）を指定してIntentを発生させる
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,getClass()), 0);
@@ -81,7 +81,7 @@ public class WaitCard extends AppCompatActivity {
 
     //ボタンがタップされた時の処理
     public void onClick(View view) {
-        soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
+//        soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
 
         TextView textView =  this.findViewById(R.id.textView);
         textView.setText("IDを確認します。\nカードをかざしてください。");

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">EESystem_C</string>
+    <string name="app_name">入退室管理システム</string>
     <string name="waitcard_message">カードをかざしてください</string>
     <string name="button">IDの確認</string>
     <string name="enter_message">入室</string>
