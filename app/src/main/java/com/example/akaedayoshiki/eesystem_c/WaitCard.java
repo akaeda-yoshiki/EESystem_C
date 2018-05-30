@@ -95,7 +95,7 @@ public class WaitCard extends AppCompatActivity {
     }
 
     public void onbackClick(View view) {
-        soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
+//        soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
 
         TextView textView =  this.findViewById(R.id.textView);
         textView.setText("カードをかざしてください");
