@@ -63,11 +63,11 @@ public class SelectAction extends AppCompatActivity {
         name1_textview.setText(intent.getStringExtra("NAME"));
         grade1_textview.setText(intent.getStringExtra("GRADE"));
         time1_textview.setText(intent.getStringExtra("TIME"));
-        stats1_textview.setText(stats);
-//        if(st.equals("0"))
-//            stats1_textview.setText("退室");
-//        else
-//            stats1_textview.setText("入室");
+//        stats1_textview.setText(stats);
+        if(stats.equals("0"))
+            stats1_textview.setText("退室");
+        else
+            stats1_textview.setText("入室");
 //        stats1_textview.setText(intent.getStringExtra("STATS"));
 //        Toast.makeText(SelectAction.this,intent.getStringExtra("STATS1"), Toast.LENGTH_SHORT).show();
 
