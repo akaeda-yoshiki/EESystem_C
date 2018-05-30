@@ -32,11 +32,10 @@ public class WaitCard extends AppCompatActivity {
     private int cardread_wav;//読み取り時の効果音
     private NfcAdapter mNfcAdapter;
     private PendingIntent pendingIntent;
-    //タイミングは、タグ発見時とする。
-    private IntentFilter[] intentFilter = new IntentFilter[]{
+    private IntentFilter[] intentFilter = new IntentFilter[]{//タイミングは、タグ発見時とする。
             new IntentFilter(NfcAdapter.ACTION_TAG_DISCOVERED)
     };
-    private String send_name = "", send_grade = "", send_time = "", send_stats = "", time1 = "", time2 = "";
+    private String send_name = "", send_grade = "", send_stats = "", time1 = "", time2 = "";
 
     //反応するタグの種類を指定。
     private String[][] techList = new String[][]{
@@ -58,10 +57,8 @@ public class WaitCard extends AppCompatActivity {
         setContentView(R.layout.waitcard);
 
         //音関係
-        soundPool       = new SoundPool( 1, AudioManager.STREAM_MUSIC, 0 );
         cardread_wav = soundPool.load(this, R.raw.waitcard, 1 );
 
-//NFCを見つけたときに反応させる
         //PendingIntent→タイミング（イベント発生）を指定してIntentを発生させる
         pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,getClass()), 0);
         mNfcAdapter = NfcAdapter.getDefaultAdapter(this);
@@ -71,13 +68,6 @@ public class WaitCard extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-//        send_name = "";
-//        send_grade = "";
-//        send_time = "";
-//        send_stats = "";
-//        time1 = "";
-//        time2 = "";
-
         mNfcAdapter.enableForegroundDispatch(this, pendingIntent, intentFilter, techList);
     }
 
@@ -93,7 +83,6 @@ public class WaitCard extends AppCompatActivity {
     public void onClick(View view) {
         soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
 
-//        send_id("0");
         TextView textView =  this.findViewById(R.id.textView);
         textView.setText("IDを確認します。\nカードをかざしてください。");
 
@@ -108,7 +97,6 @@ public class WaitCard extends AppCompatActivity {
     public void onbackClick(View view) {
         soundPool.play(cardread_wav, 1F, 1F, 0, 0, 1F);//効果音再生
 
-//        send_id("0");
         TextView textView =  this.findViewById(R.id.textView);
         textView.setText("カードをかざしてください");
 
@@ -119,19 +107,16 @@ public class WaitCard extends AppCompatActivity {
         back.setVisibility(View.INVISIBLE);
         buttun_flag = 0;
     }
+    //次のactivityへデータの送信と偏移
     public void goto_selectaction(){
         if(send_grade != "" && send_name != "") {
             Intent intent = new Intent(WaitCard.this, SelectAction.class);//入退室選択画面に切り替え
             intent.putExtra("NAME", send_name);
             intent.putExtra("GRADE", send_grade);
-//            String[] str = send_time.split("_");
             intent.putExtra("TIME", time2);
             intent.putExtra("ST", send_stats);
-//            TextView Textview =  findViewById(R.id.textView);
-//            Textview.setText(send_stats);
             send_name = "";
             send_grade = "";
-            send_time = "";
             send_stats = "";
             time1 = "";
             time2 = "";
@@ -157,7 +142,6 @@ public class WaitCard extends AppCompatActivity {
         //NFCのIDを取得。byte配列。
         byte[] rawId = intent.getByteArrayExtra(NfcAdapter.EXTRA_ID);
         String id = bytesToString(rawId);
-//        Toast.makeText(getApplicationContext(), id, Toast.LENGTH_SHORT).show();
 
         if(buttun_flag == 0)
           send_id(id);
@@ -194,7 +178,6 @@ public class WaitCard extends AppCompatActivity {
         //サーバーのアドレス
         String url="http://192.168.0.159/2018grade4/kaihatu_zemi/akaeda/EESystem_S/insert.php";
         url+="?id="+id+"&time1="+time1+"&time2="+time2;
-//        url+="?id=5&time="+send_time;
         StringRequest stringReq=new StringRequest(Request.Method.GET ,url,
 
                 //通信成功
@@ -213,11 +196,10 @@ public class WaitCard extends AppCompatActivity {
                             send_name = data[1].substring(8, data[1].length() - 1);
                             send_grade = data[2].substring(9, data[2].length() - 1);
                             send_stats = data[3].substring(9, data[3].length() - 1);
-//                            TextView Textview =  findViewById(R.id.textView);
-//                        Textview.setText(send_stats);
                             goto_selectaction();
                         }
 
+                        //デバッグ用
 //                        String[] str = send_time.split(" ");
 //                        TextView Textview =  findViewById(R.id.textView);
 //                        Textview.setText(time1);
@@ -245,8 +227,6 @@ public class WaitCard extends AppCompatActivity {
                 Map<String,String> params = new HashMap<>();
 //                params.put("id","1111");
 //                params.put("name","stats");
-
-
 //                params.put("grade","aa");
                 return params;
             }
@@ -257,14 +237,13 @@ public class WaitCard extends AppCompatActivity {
     public  void updata_time(){
         Calendar calendar;
 
-        //時刻取得、
+        //時刻取得
         calendar = Calendar.getInstance();
         int year = calendar.get(Calendar.YEAR);
         int month = calendar.get(Calendar.MONTH) + 1;
         int day = calendar.get(Calendar.DAY_OF_MONTH);
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        send_time =year + "_" + month + "_" + day + " " + hour + ":" + minute;
         time1 += year;
         if(month < 10)
             time1 += "0" + month;

@@ -1,55 +1,33 @@
 package com.example.akaedayoshiki.eesystem_c;
-//package com.example.akaedayoshiki.eesystem_c;
-
 
 import android.content.Intent;
-import android.media.AudioManager;
-import android.media.SoundPool;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import java.util.Calendar;
 
 public class SelectAction extends AppCompatActivity {
 
-    //    private Button enter;
-//    private Button exit;
     Handler handle;//一定時間後に処理するための変数
-    private SoundPool soundPool;
-    private int selectaction_wav;//入退室を選択時の効果音
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.selectaction);
 
-
-        //音関係
-        soundPool       = new SoundPool( 1, AudioManager.STREAM_MUSIC, 0 );
-//        Intent intent = getIntent();
-        get_data();
-        handle = new Handler();
-        handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
+        get_data();//データの受信と書き込み
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         get_data();
-        handle = new Handler();
-        handle.postDelayed(new backwaitcard(), 2000);//2秒後に画面切り替え
     }
 
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        //画面表示時に再度起動された際にgetIntent()を更新する。
-        setIntent(intent);
-//        get_data(intent);
+        setIntent(intent);//画面表示時に再度起動された際にgetIntent()を更新する。
     }
 
     private void get_data(){
@@ -63,20 +41,18 @@ public class SelectAction extends AppCompatActivity {
         name1_textview.setText(intent.getStringExtra("NAME"));
         grade1_textview.setText(intent.getStringExtra("GRADE"));
         time1_textview.setText(intent.getStringExtra("TIME"));
-//        stats1_textview.setText(stats);
         if(stats.equals("0"))
             stats1_textview.setText("退室");
         else
             stats1_textview.setText("入室");
-//        stats1_textview.setText(intent.getStringExtra("STATS"));
-//        Toast.makeText(SelectAction.this,intent.getStringExtra("STATS1"), Toast.LENGTH_SHORT).show();
 
-
+        handle = new Handler();
+        handle.postDelayed(new back_wait_card(), 2000);//2秒後に画面切り替え
 
     }
 
 
-    class backwaitcard implements Runnable {
+    class back_wait_card implements Runnable {
         @Override
         public void run() {
 
